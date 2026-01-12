@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { usePlayerStore } from "../store/playerStore";
-import { getBestImage } from "../api/saavn";
+import { getArtistName, getBestImage } from "../api/saavn";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function MiniPlayer() {
@@ -45,7 +45,7 @@ export default function MiniPlayer() {
           {song.name}
         </Text>
         <Text style={{ color: "#ccc", marginTop: 3, fontSize: 12 }} numberOfLines={1}>
-          {song.primaryArtists || "Unknown Artist"}
+         getArtistName(song)
         </Text>
       </View>
 

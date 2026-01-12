@@ -34,3 +34,19 @@ export function getBestAudioUrl(song: SaavnSong) {
   if (!song.downloadUrl || song.downloadUrl.length === 0) return "";
   return song.downloadUrl[song.downloadUrl.length - 1]?.url ?? "";
 }
+
+export function getArtistName(song: SaavnSong): string {
+  // most common field
+  if (song.primaryArtists && song.primaryArtists.trim().length > 0) {
+    return song.primaryArtists;
+  }
+
+  // some APIs have artists array
+  // @ts-ignore
+  if (song.artists?.primary?.length) {
+    // @ts-ignore
+    return song.artists.primary.map((a: any) => a.name).join(", ");
+  }
+
+  return "Artist";
+}

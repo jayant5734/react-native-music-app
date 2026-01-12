@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { SaavnSong, getBestImage } from "../api/saavn";
+import { SaavnSong, getArtistName, getBestImage } from "../api/saavn";
 
 type Props = {
   song: SaavnSong;
@@ -38,7 +38,8 @@ export default function SongCard({ song, onPress, onAddToQueue }: Props) {
           style={{ fontSize: 13, color: "#666", marginTop: 3 }}
           numberOfLines={1}
         >
-          {song.primaryArtists || "Unknown Artist"}
+          <Text>{getArtistName(song)}</Text>
+
         </Text>
       </View>
     </TouchableOpacity>
