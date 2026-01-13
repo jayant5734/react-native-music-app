@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import { SaavnSong, getBestImage } from "../api/saavn";
@@ -7,23 +9,45 @@ type Props = {
   onPressSong: (song: SaavnSong) => void;
 };
 
-function getUniqueArtists(songs: SaavnSong[]) {
+// 😎 random artist names (jugad)
+const RANDOM_ARTISTS = [
+  "Arijit Singh",
+  "Neha Kakkar",
+  "Atif Aslam",
+  "Jubin Nautiyal",
+  "Darshan Raval",
+  "Shreya Ghoshal",
+  "Pritam",
+  "Badshah",
+  "KK",
+  "Sonu Nigam",
+];
+
+// 🎯 artist jugad extractor
+function getJugadArtists(songs: SaavnSong[]) {
   const map = new Map<string, { name: string; image: string }>();
 
-  songs.forEach((s) => {
-    const name = s.primaryArtists || "Unknown Artist";
+  songs.forEach((song, index) => {
+    const name =
+      RANDOM_ARTISTS[index % RANDOM_ARTISTS.length] +
+      " " +
+      (index + 1); // unique banane ke liye
+
     if (!map.has(name)) {
-      map.set(name, { name, image: getBestImage(s) });
+      map.set(name, {
+        name,
+        image: getBestImage(song),
+      });
     }
   });
 
   return Array.from(map.values()).slice(0, 10);
 }
 
-export default function SuggestedHome({ songs, onPressSong }: Props) {
+export default function SuggestedHome({ songs = [], onPressSong }: Props) {
   const recentlyPlayed = songs.slice(0, 10);
-  const artists = getUniqueArtists(songs);
   const mostPlayed = songs.slice(10, 20);
+  const artists = getJugadArtists(songs);
 
   return (
     <View style={{ paddingHorizontal: 16, paddingTop: 12 }}>
@@ -41,10 +65,7 @@ export default function SuggestedHome({ songs, onPressSong }: Props) {
         style={{ marginTop: 10 }}
         ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => onPressSong(item)}
-            style={{ width: 120 }}
-          >
+          <TouchableOpacity onPress={() => onPressSong(item)} style={{ width: 120 }}>
             <Image
               source={{ uri: getBestImage(item) }}
               style={{ width: 120, height: 120, borderRadius: 18, backgroundColor: "#eee" }}
@@ -56,15 +77,8 @@ export default function SuggestedHome({ songs, onPressSong }: Props) {
         )}
       />
 
-      {/* Artists */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop: 22,
-        }}
-      >
+      {/* 🔥 Artists (JUGAAD MODE) */}
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 22 }}>
         <Text style={{ fontSize: 16, fontWeight: "900" }}>Artists</Text>
         <Text style={{ color: "orange", fontWeight: "800" }}>See All</Text>
       </View>
@@ -90,14 +104,7 @@ export default function SuggestedHome({ songs, onPressSong }: Props) {
       />
 
       {/* Most Played */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop: 22,
-        }}
-      >
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 22 }}>
         <Text style={{ fontSize: 16, fontWeight: "900" }}>Most Played</Text>
         <Text style={{ color: "orange", fontWeight: "800" }}>See All</Text>
       </View>
@@ -110,10 +117,7 @@ export default function SuggestedHome({ songs, onPressSong }: Props) {
         style={{ marginTop: 10, marginBottom: 120 }}
         ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => onPressSong(item)}
-            style={{ width: 120 }}
-          >
+          <TouchableOpacity onPress={() => onPressSong(item)} style={{ width: 120 }}>
             <Image
               source={{ uri: getBestImage(item) }}
               style={{ width: 120, height: 120, borderRadius: 18, backgroundColor: "#eee" }}
