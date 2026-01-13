@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎵 JioSaavn Music Player (React Native + Expo)
 
 A React Native music player app built as a company assignment using the **JioSaavn API**.
@@ -78,3 +79,6 @@ The app will open on your phone
 
 ✅ Tip: Ensure your laptop and mobile are on the same WiFi network.
 If campus WiFi blocks Expo, use a mobile hotspot.
+=======
+# react-native-music-app
+>>>>>>> 5bcfe9a75b3bb46f3c8911db0f52e63f44919ed0
